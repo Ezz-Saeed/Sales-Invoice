@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import {fetchProducts} from '../Services/productService'
+import {fetchProducts, addToCart} from '../Services/productService'
+// import {InvoiceItem} from '../Models/invoiceItem'
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -40,7 +41,13 @@ const ProductList = () => {
             <div className="card-body">
               <h5 className="card-title">{product.name}</h5>
               <p className="card-text">{product.description}</p>
-              <p className="card-price">${product.price}</p>
+              <p className="card-text">Quantity: {product.stockQuantity}</p>
+              <p className="card-price">Pricce: ${product.price}</p>
+            </div>
+            <div className="card-footer">
+              <button onClick={()=>
+              addToCart({productId:product.id, invoiceId:1, unitPrice: product.price, quantity:1})} 
+              className='btn btn-primary'>Add to cart</button>
             </div>
           </div>
         ))}

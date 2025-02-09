@@ -1,5 +1,6 @@
 
 using APIs.Data;
+using APIs.Helpers;
 using Microsoft.EntityFrameworkCore;
 
 namespace APIs
@@ -24,6 +25,7 @@ namespace APIs
                     policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
                 });
             });
+            builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
             builder.Services.AddDbContext<AppDbContext>(options =>
             {
