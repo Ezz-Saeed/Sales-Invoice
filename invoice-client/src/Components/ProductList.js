@@ -46,7 +46,7 @@ const ProductList = () => {
             </div>
             <div className="card-footer">
               <button onClick={()=>
-              addToCart({productId:product.id, invoiceId:1, unitPrice: product.price, quantity:1})} 
+              addToCart({productId:product.id, invoiceId:18, unitPrice: product.price, quantity:1})} 
               className='btn btn-primary'>Add to cart</button>
             </div>
           </div>
