@@ -11,7 +11,7 @@ namespace APIs.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<InvoiceItem> InvoiceItems { get; set; }
-        public DbSet<Payment> Payments { get; set; }
+       
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,9 +34,9 @@ namespace APIs.Data
                 .HasForeignKey(i => i.CustomerId);
 
             // Invoice-Payment Relationship
-            modelBuilder.Entity<Payment>()
-                .HasOne(p => p.Invoice)
-                .WithOne(i => i.Payment);
+            //modelBuilder.Entity<Payment>()
+            //    .HasOne(p => p.Invoice)
+            //    .WithOne(i => i.Payment);
 
 
 

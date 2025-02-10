@@ -59,7 +59,8 @@ namespace APIs.Controllers
             if (existingItem is null)
             {
                 var invoiceItem = mapper.Map<InvoiceItem>(dto);
-                
+                var product = await context.Products.FindAsync(dto.ProductId);
+                product.StockQuantity -=dto.Quantity;
                 invoice.InvoiceItems.Add(invoiceItem);
                 invoice.TotalAmount += invoiceItem.TotalPrice;
             }
@@ -67,6 +68,7 @@ namespace APIs.Controllers
             {
                 existingItem.Quantity += dto.Quantity;
                 existingItem.Product = await context.Products.FindAsync(dto.ProductId);
+                existingItem.Product.StockQuantity -= dto.Quantity;
                 context.InvoiceItems.Update(existingItem);
                 invoice.TotalAmount = invoice.InvoiceItems.Sum(ii => ii.TotalPrice);
             }

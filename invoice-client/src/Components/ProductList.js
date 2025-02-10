@@ -38,7 +38,7 @@ const ProductList = () => {
       <div className="d-flex justify-content-between">
         {products.map((product) => (
           <div key={product.id} className="card mb-4" style={{ width: '18rem' }}>
-            <img src={product.imageUrl} alt={product.name} className="card-img-top" />
+          
             <div className="card-body">
               <h5 className="card-title">{product.name}</h5>
               <p className="card-text">{product.description}</p>

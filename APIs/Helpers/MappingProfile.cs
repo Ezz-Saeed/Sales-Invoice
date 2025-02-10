@@ -11,8 +11,7 @@ namespace APIs.Helpers
             CreateMap<InvoiceItemDto, InvoiceItem>().ReverseMap()
                 .ForMember(d=>d.ProductName, opt=>opt.MapFrom(s=>s.Product.Name));
 
-            //CreateMap<Payment, PaymentDto>()
-            //    .ForMember(d=>d.Invoice, opt=>opt.MapFrom(s=>s.Invoice));
+           
 
             CreateMap<Invoice, InvoiceDto>()
                 .ForMember(d => d.CustomerName, opt => opt.MapFrom(s => s.Customer.Name))
