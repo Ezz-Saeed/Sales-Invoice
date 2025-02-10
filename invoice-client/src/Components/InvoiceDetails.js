@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { getInvoice } from "../Services/productService"; // Adjust the path to your function
+import { getInvoice } from "../Services/productService";
+import { Link } from "react-router-dom";
 
 const InvoiceDetails = ({ invoiceId }) => {
   const [invoice, setInvoice] = useState(null);
@@ -7,7 +8,6 @@ const InvoiceDetails = ({ invoiceId }) => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Fetch invoice details on component mount
     const fetchInvoice = async () => {
       try {
         const fetchedInvoice = await getInvoice(invoiceId);
@@ -64,6 +64,11 @@ const InvoiceDetails = ({ invoiceId }) => {
           ))}
         </tbody>
       </table>
+      <div className="mt-4">
+        <Link to={`/checkout`} className="btn btn-primary">
+          Proceed to Checkout
+        </Link>
+      </div>
     </div>
   );
 };
