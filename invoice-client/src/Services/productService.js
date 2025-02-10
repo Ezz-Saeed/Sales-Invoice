@@ -36,7 +36,7 @@ export async function addToCart(invoiceItem) {
     unitPrice: invoiceItem.unitPrice
   };
   const invoice = await genericPost(url, data);
-  // console.log(invoice)
+  console.log(invoice)
   return invoice;
 }
 

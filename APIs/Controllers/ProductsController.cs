@@ -19,14 +19,33 @@ namespace APIs.Controllers
             return Ok(products);
         }
 
+        [HttpGet("activeInvoice")]
+        public async Task<IActionResult> ActiveInvoice()
+        {
+            var invoice = await context.Invoices.SingleOrDefaultAsync(i=>i.IsPaid == false);
+            if (invoice is null)
+            {
+                invoice = new Invoice
+                {
+                    InvoiceDate = DateTime.Now,
+                    CustomerId = 1
+                };
+                await context.Invoices.AddAsync(invoice);
+                await context.SaveChangesAsync();
+            }
+            return Ok(invoice.Id);
+        }
+
         [HttpPost("addToCart")]
         public async Task<IActionResult> AddToCart(InvoiceItemDto dto)
         {
-            Invoice invoice;
+            //Invoice invoice;
             var customer = await context.Customers.Include(c=>c.Invoices).ThenInclude(i=>i.InvoiceItems)
                 .SingleOrDefaultAsync(c=>c.Id==1);
+            var invoice = customer!.Invoices.SingleOrDefault(i => i.Id == dto.InvoiceId)!;
+            //if (invoice is null) return BadRequest("Invalid invoice id!");
 
-            if (dto.InvoiceId == 0)
+            if (invoice is null || invoice.IsPaid)
             {
                 invoice = new Invoice
                 {
@@ -35,11 +54,7 @@ namespace APIs.Controllers
                 customer!.Invoices.Add(invoice);
                 context.Update(customer);               
             }
-            else
-            {
-                invoice = customer!.Invoices.SingleOrDefault(i=>i.Id== dto.InvoiceId)!;
-                if (invoice is null) return BadRequest("Invalid invoice id!");
-            }
+            
             var existingItem = invoice.InvoiceItems.FirstOrDefault(ii=>ii.ProductId==dto.ProductId);
             if (existingItem is null)
             {
@@ -50,6 +65,7 @@ namespace APIs.Controllers
             else
             {
                 existingItem.Quantity += dto.Quantity;
+                existingItem.Product = await context.Products.FindAsync(dto.ProductId);
                 context.InvoiceItems.Update(existingItem);
                 invoice.TotalAmount = invoice.InvoiceItems.Sum(ii => ii.TotalPrice);
             }
