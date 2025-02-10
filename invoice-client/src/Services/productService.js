@@ -40,3 +40,12 @@ export async function addToCart(invoiceItem) {
   return invoice;
 }
 
+
+export async function checkout(invoiceId = 18) {
+  const url = `${API_URL}/checkout/${invoiceId}`;
+  const data = {};
+  const invoice = await genericPost(url, data);
+  // console.log(invoice)
+  return invoice;
+}
+

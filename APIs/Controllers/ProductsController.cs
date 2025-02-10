@@ -68,13 +68,14 @@ namespace APIs.Controllers
             return Ok(mapper.Map<InvoiceDto>(invoice));
         }
 
-        [HttpGet("checkout/{invoiceId}")]
+        [HttpPost("checkout/{invoiceId}")]
         public async Task<IActionResult> Checkout(int invoiceId)
         {
             var invoice = await context.Invoices.Include(i => i.InvoiceItems).
                 ThenInclude(i => i.Product).Include(i => i.Customer).SingleOrDefaultAsync(i => i.Id == invoiceId);
             if (invoice is null) return BadRequest("Invalid invoice id!");
             invoice.IsPaid = true;
+            invoice.InvoiceDate = DateTime.Now;
             context.Invoices.Update(invoice);        
             await context.SaveChangesAsync();
             return Ok(mapper.Map<InvoiceDto>(invoice));

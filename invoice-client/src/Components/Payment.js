@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { getInvoice } from "../Services/productService"; // Adjust the path to your function
+import { checkout } from "../Services/productService"; // Adjust the path to your function
 
-const InvoiceDetails = ({ invoiceId }) => {
+const Payment = ({ invoiceId }) => {
   const [invoice, setInvoice] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -10,7 +10,7 @@ const InvoiceDetails = ({ invoiceId }) => {
     // Fetch invoice details on component mount
     const fetchInvoice = async () => {
       try {
-        const fetchedInvoice = await getInvoice(invoiceId);
+        const fetchedInvoice = await checkout(invoiceId);
         setInvoice(fetchedInvoice);
       } catch (err) {
         setError(err.message);
@@ -33,10 +33,10 @@ const InvoiceDetails = ({ invoiceId }) => {
         <div className="card-body">
           <h5 className="card-title">Trnsaction ID: {invoice.id}</h5>
           <p className="card-text">Trnsaction Date: {new Date(invoice.invoiceDate).toLocaleDateString()}</p>
-          {/* <p className="card-text">Customer Name: {invoice.customerName}</p>
+          <p className="card-text">Customer Name: {invoice.customerName}</p>
           <p className="card-text">Phone: {invoice.customerPhone}</p>
           <p className="card-text">Address: {invoice.customerAddress}</p>
-          <p className="card-text">Total Amount: ${invoice.totalAmount.toFixed(2)}</p> */}
+          <p className="card-text">Total Trnsaction Amount: ${invoice.totalAmount.toFixed(2)}</p>
           <p className="card-text">Status: {invoice.isPaid ? "Paid" : "Unpaid"}</p>
         </div>
       </div>
@@ -68,4 +68,4 @@ const InvoiceDetails = ({ invoiceId }) => {
   );
 };
 
-export default InvoiceDetails;
+export default Payment;

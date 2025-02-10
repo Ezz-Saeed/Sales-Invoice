@@ -4,6 +4,7 @@ import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import ProductList from './Components/ProductList';
 import InvoiceDetails from './Components/InvoiceDetails'
+import Payment from './Components/Payment'
 
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
       <Routes>
         <Route path="/products" element={<ProductList />} />
         <Route path="/invoice" element={<InvoiceDetails />} />
+        <Route path="/checkout" element={<Payment />} />
         {/* Other routes */}
       </Routes>
     </Router>
