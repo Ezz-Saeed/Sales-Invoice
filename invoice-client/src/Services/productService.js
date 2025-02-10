@@ -15,7 +15,16 @@ export const fetchProducts = async () => {
 };
 
 
-// export 
+export async function getInvoiceItems(invoiceId = 18) {
+  try{
+    const items = await genericFetch(`${API_URL}/getInvoiceItems/${invoiceId}`)
+    // console.log(items)
+    return items;
+  } catch(error){
+    console.error('Error fetching items:', error);
+    throw new Error('Failed to fetch items');
+  }
+}
 
 
 export async function addToCart(invoiceItem) {
@@ -27,7 +36,7 @@ export async function addToCart(invoiceItem) {
     unitPrice: invoiceItem.unitPrice
   };
   const invoice = await genericPost(url, data);
-  console.log(invoice)
+  // console.log(invoice)
   return invoice;
 }
 

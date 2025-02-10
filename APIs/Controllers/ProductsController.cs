@@ -61,7 +61,8 @@ namespace APIs.Controllers
         [HttpGet("getInvoiceItems/{invoiceId}")]
         public async Task<IActionResult> GetInvoiceItems(int invoiceId)
         {
-            var invoice = await context.Invoices.Include(i=>i.InvoiceItems).SingleOrDefaultAsync(i=>i.Id== invoiceId);
+            var invoice = await context.Invoices.Include(i=>i.InvoiceItems).
+                ThenInclude(i=>i.Product).SingleOrDefaultAsync(i=>i.Id== invoiceId);
             if (invoice is null) return BadRequest("Invalid invoice id!");
             var invoiceItems = invoice.InvoiceItems.ToList();
             return Ok(mapper.Map<List<InvoiceItemDto>>(invoiceItems));

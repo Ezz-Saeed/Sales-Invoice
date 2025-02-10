@@ -9,5 +9,6 @@ namespace APIs.DTOs
         public decimal TotalPrice => Quantity * UnitPrice;
         public int? InvoiceId { get; set; }
         public int ProductId { get; set; }
+        public string ProductName { get; set; }
     }
 }
