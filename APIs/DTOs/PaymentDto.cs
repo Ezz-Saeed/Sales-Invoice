@@ -1,14 +1,13 @@
-﻿using System.Text.Json.Serialization;
+﻿using APIs.Models;
 
-namespace APIs.Models
+namespace APIs.DTOs
 {
-    public class Payment
+    public class PaymentDto
     {
         public int Id { get; set; }
         public decimal Amount { get; set; }
         public DateTime PaymentDate { get; set; }
         public int InvoiceId { get; set; }
-        //[JsonIgnore]
         public Invoice Invoice { get; set; }
     }
 }

@@ -62,10 +62,22 @@ namespace APIs.Controllers
         public async Task<IActionResult> GetInvoiceItems(int invoiceId)
         {
             var invoice = await context.Invoices.Include(i=>i.InvoiceItems).
-                ThenInclude(i=>i.Product).SingleOrDefaultAsync(i=>i.Id== invoiceId);
+                ThenInclude(i=>i.Product).Include(i=>i.Customer).SingleOrDefaultAsync(i=>i.Id== invoiceId);
             if (invoice is null) return BadRequest("Invalid invoice id!");
             var invoiceItems = invoice.InvoiceItems.ToList();
-            return Ok(mapper.Map<List<InvoiceItemDto>>(invoiceItems));
+            return Ok(mapper.Map<InvoiceDto>(invoice));
+        }
+
+        [HttpGet("checkout/{invoiceId}")]
+        public async Task<IActionResult> Checkout(int invoiceId)
+        {
+            var invoice = await context.Invoices.Include(i => i.InvoiceItems).
+                ThenInclude(i => i.Product).Include(i => i.Customer).SingleOrDefaultAsync(i => i.Id == invoiceId);
+            if (invoice is null) return BadRequest("Invalid invoice id!");
+            invoice.IsPaid = true;
+            context.Invoices.Update(invoice);        
+            await context.SaveChangesAsync();
+            return Ok(mapper.Map<InvoiceDto>(invoice));
         }
     }
 }
