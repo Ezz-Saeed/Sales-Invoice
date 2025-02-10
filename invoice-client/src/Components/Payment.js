@@ -1,42 +1,55 @@
 import React, { useEffect, useState } from "react";
-import { checkout } from "../Services/productService"; // Adjust the path to your function
-
-const Payment = ({ invoiceId }) => {
-  const [invoice, setInvoice] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+import { activeInvoiceId } from "../Services/productService"; 
+import { checkout } from "../Services/productService";
+const Payment = () => {
+  const [invoiceId, setInvoiceId] = useState(null);
+  const [invoice, setInvoice] = useState(null); 
+  const [loading, setLoading] = useState(true); 
+  const [setError] = useState(null);
 
   useEffect(() => {
-    // Fetch invoice details on component mount
-    const fetchInvoice = async () => {
+    const fetchInvoiceId = async () => {
       try {
-        const fetchedInvoice = await checkout(invoiceId);
-        setInvoice(fetchedInvoice);
+        const id = await activeInvoiceId(); 
+        setInvoiceId(id); 
       } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
+        setError("Failed to fetch invoice ID"); 
       }
     };
 
-    fetchInvoice();
-  }, [invoiceId]);
+    fetchInvoiceId(); 
+  }, []); 
+  useEffect(() => {
+    if (invoiceId) { 
+      const fetchInvoice = async () => {
+        try {
+          const fetchedInvoice = await checkout(invoiceId); 
+          setInvoice(fetchedInvoice); 
+        } catch (err) {
+          setError(err.message); 
+        } finally {
+          setLoading(false);
+        }
+      };
 
-  if (loading) return <p>Loading invoice...</p>;
-  if (error) return <p>Error: {error}</p>;
-  if (!invoice) return <p>No invoice found.</p>;
+      fetchInvoice(); 
+    }
+  }, [invoiceId]); 
+
+  if (loading) return <p>Loading...</p>; 
+  if (!invoice) return <p>No invoice found.</p>; 
 
   return (
     <div className="container mt-4">
       <h2>Invoice Details</h2>
       <div className="card mb-4">
         <div className="card-body">
-          <h5 className="card-title">Trnsaction ID: {invoice.id}</h5>
-          <p className="card-text">Trnsaction Date: {new Date(invoice.invoiceDate).toLocaleDateString()}</p>
+          <h5 className="card-title">Transaction ID: {invoice.id}</h5>
+          <p className="card-text">Transaction Date: {new Date(invoice.invoiceDate).toLocaleDateString()}</p>
           <p className="card-text">Customer Name: {invoice.customerName}</p>
           <p className="card-text">Phone: {invoice.customerPhone}</p>
           <p className="card-text">Address: {invoice.customerAddress}</p>
-          <p className="card-text">Total Trnsaction Amount: ${invoice.totalAmount.toFixed(2)}</p>
+          <p className="card-text">Total Transaction Amount: ${invoice.totalAmount.toFixed(2)}</p>
           <p className="card-text">Status: {invoice.isPaid ? "Paid" : "Unpaid"}</p>
         </div>
       </div>

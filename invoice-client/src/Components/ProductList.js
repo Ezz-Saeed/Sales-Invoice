@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import {fetchProducts, addToCart} from '../Services/productService'
-// import {InvoiceItem} from '../Models/invoiceItem'
+import {fetchProducts, addToCart, activeInvoiceId} from '../Services/productService'
 
 const ProductList = () => {
+  const [invoiceId, setInvoiceId] = useState(null);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -10,7 +10,8 @@ const ProductList = () => {
   useEffect(() => {
     const getProducts = async () => {
       try {
-        // const response = await fetch('http://localhost:5024/api/products/getProducts')
+        const id = await activeInvoiceId();
+        setInvoiceId(id);
         const data = await fetchProducts()
         setProducts(data);
       } catch (err) {
@@ -46,7 +47,7 @@ const ProductList = () => {
             </div>
             <div className="card-footer">
               <button onClick={()=>
-              addToCart({productId:product.id, invoiceId:18, unitPrice: product.price, quantity:1})} 
+              addToCart({productId:product.id, invoiceId:invoiceId, unitPrice: product.price, quantity:1})} 
               className='btn btn-primary'>Add to cart</button>
             </div>
           </div>

@@ -59,6 +59,7 @@ namespace APIs.Controllers
             if (existingItem is null)
             {
                 var invoiceItem = mapper.Map<InvoiceItem>(dto);
+                
                 invoice.InvoiceItems.Add(invoiceItem);
                 invoice.TotalAmount += invoiceItem.TotalPrice;
             }
