@@ -1,4 +1,3 @@
-// genericFetch.js
 export async function genericFetch(url) {
   const response = await fetch(url);
   
@@ -10,7 +9,6 @@ export async function genericFetch(url) {
 }
 
 
-// genericPost.js
 export async function genericPost(url, data) {
   const response = await fetch(url, {
     method: "POST",

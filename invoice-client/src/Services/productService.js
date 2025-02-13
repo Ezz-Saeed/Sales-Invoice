@@ -1,9 +1,9 @@
-// ProductService.js
+
 import { genericFetch, genericPost} from './genericeService';  
 
-const API_URL = 'http://localhost:5024/api/products';
+const API_URL = '/api/products';
+// const API_URL = 'http://localhost:5024/api/products';
 
-// Function to fetch the list of products from the API
 export const fetchProducts = async () => {
   try {
     const products = await genericFetch(`${API_URL}/getProducts`);
