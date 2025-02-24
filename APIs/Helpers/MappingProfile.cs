@@ -8,14 +8,13 @@ namespace APIs.Helpers
     {
         public MappingProfile()
         {
-            CreateMap<InvoiceItemDto, InvoiceItem>().ReverseMap()
-                .ForMember(d=>d.ProductName, opt=>opt.MapFrom(s=>s.Product.Name));
+            //CreateMap<InvoiceItemDto, InvoiceItem>().ReverseMap()
+            //    .ForMember(d=>d.ProductName, opt=>opt.MapFrom(s=>s.Product.Name));
 
            
 
             CreateMap<Invoice, InvoiceDto>()
                 .ForMember(d => d.CustomerName, opt => opt.MapFrom(s => s.Customer.Name))
-                .ForMember(d => d.CustomerAddress, opt => opt.MapFrom(s => s.Customer.Address))
                 .ForMember(d => d.CustomerPhone, opt => opt.MapFrom(s => s.Customer.Phone))
                 .ForMember(d => d.InvoiceItems, opt => opt.MapFrom(s => s.InvoiceItems)); 
                 
