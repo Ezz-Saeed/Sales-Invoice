@@ -11,13 +11,14 @@ namespace APIs.Helpers
             //CreateMap<InvoiceItemDto, InvoiceItem>().ReverseMap()
             //    .ForMember(d=>d.ProductName, opt=>opt.MapFrom(s=>s.Product.Name));
 
-           
+            CreateMap<InvoiceItemDto, InvoiceItem>();
+            
 
-            CreateMap<Invoice, InvoiceDto>()
-                .ForMember(d => d.CustomerName, opt => opt.MapFrom(s => s.Customer.Name))
-                .ForMember(d => d.CustomerPhone, opt => opt.MapFrom(s => s.Customer.Phone))
-                .ForMember(d => d.InvoiceItems, opt => opt.MapFrom(s => s.InvoiceItems)); 
-                
+            CreateMap<InvoiceDto, Invoice>()
+                .ForMember(d => d.InvoiceItems, opt => opt.MapFrom(s => s.InvoiceItems));
+
+            CreateMap<CustomerDto, Customer>();
+
         }
     }
 }

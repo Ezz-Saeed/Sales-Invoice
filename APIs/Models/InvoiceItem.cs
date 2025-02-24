@@ -8,7 +8,7 @@
         public decimal UnitPrice { get; set; }
         public decimal SubTotal => Quantity * UnitPrice;
         public int InvoiceId { get; set; }
-        public Invoice Invoice { get; set; }
+        public Invoice? Invoice { get; set; }
 
       
     }

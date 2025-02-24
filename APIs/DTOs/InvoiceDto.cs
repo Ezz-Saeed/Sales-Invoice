@@ -2,13 +2,12 @@
 {
     public class InvoiceDto
     {
-        public int Id { get; set; }
+        public string Title { get; set; }
+        public string SourceName { get; set; }
         public DateTime InvoiceDate { get; set; }
-        public decimal TotalAmount { get; set; }
-        public bool IsPaid { get; set; }
-        public string CustomerName { get; set; }
-        public string CustomerPhone { get; set; }
-        public string CustomerAddress { get; set; }
+        public DateTime DueDate { get; set; }
+        public decimal Tax { get; set; }
+        public CustomerDto Customer { get; set; }
         public List<InvoiceItemDto> InvoiceItems { get; set; }
     }
 }
