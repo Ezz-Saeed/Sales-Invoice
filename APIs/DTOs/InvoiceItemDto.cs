@@ -7,7 +7,7 @@ namespace APIs.DTOs
         public string Name { get; set; }
         public int Quantity { get; set; }
         public decimal UnitPrice { get; set; }
-        //public decimal SubTotal => Quantity * UnitPrice;
+        public decimal SubTotal => Quantity * UnitPrice;
         //public int InvoiceId { get; set; }
     }
 }

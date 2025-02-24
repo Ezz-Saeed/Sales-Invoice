@@ -29,7 +29,7 @@ namespace APIs
 
             builder.Services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("localConnection"));
+                options.UseSqlServer(builder.Configuration.GetConnectionString("remoteConnection"));
             });
 
             var app = builder.Build();
@@ -45,6 +45,7 @@ namespace APIs
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
+            app.UseStaticFiles();
 
 
             app.MapControllers();
